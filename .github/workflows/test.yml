@@ -1,0 +1,43 @@
+name: Test
+
+on:
+  push:
+    paths-ignore:
+      - ".vscode"
+      - "*.md"
+    branches:
+      - main
+  pull_request:
+    paths-ignore:
+      - ".vscode"
+      - "*.md"
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  style_check:
+    # skip if it's a release commit
+    if: "!contains(github.event.head_commit.message, 'chore(main): release')"
+    name: Style Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Pixi
+        uses: prefix-dev/setup-pixi@9936258fee697aff89b3fed6ca1f80a382ef694e # v0.11.3
+        with:
+          run-install: false
+
+      - name: Run check
+        run: pixi run fmt -- --check
+
+  ci_nightly_build:
+    # skip if it's a pull request and the commit message contains 'build(deps)', typically for dependabot
+    if: "!(github.event_name == 'pull_request' && contains(github.event.head_commit.message, 'build(deps)'))"
+    name: Build Nightly
+    uses: ./.github/workflows/build.yml
+    with:
+      build_type: nightly
