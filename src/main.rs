@@ -1,4 +1,7 @@
 #[cfg(target_os = "windows")]
+extern crate windows_sys as windows;
+
+#[cfg(target_os = "windows")]
 mod target_windows {
 
 use std::ffi::c_void;
