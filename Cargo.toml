@@ -23,3 +23,12 @@ codegen-units = 16
 inherits = "release"
 debug = true
 strip = "none"
+
+[dependencies]
+dirs-sys = "0.5.0"
+windows-sys = { version = ">= 0.59.0", features = [
+    "Win32_UI_Shell",
+    "Win32_Foundation",
+    "Win32_Globalization",
+    "Win32_System_Com",
+] }
