@@ -36,7 +36,7 @@ sccache = { workspace = true }
 cache-stat = { cmd = "sccache --show-stats", description = "Show sccache statistics" }
 
 ## Environments and tasks
-[environments.build]
+[environments.default]
 features = ["build", "cache"]
 
 [tasks]
