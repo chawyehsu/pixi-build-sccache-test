@@ -48,12 +48,9 @@ jobs:
         with:
           run-install: false
 
-      - name: Override Cargo Profile
-        if: inputs.build_type != 'release'
-        shell: bash
-        run: |
-          sed -i.bak 's/"--profile", "release"/"--profile", "ci"/' pixi.toml && rm pixi.toml.bak
-
+      - name: Test
+        run: pixi run cargo run
+      
       # Windows: build
       - name: Build (Windows)
         if: matrix.platform == 'windows'

@@ -12,14 +12,6 @@ rust_compiler_version = ["1.95.0"]
 c_compiler = ["vs2022"]
 cxx_compiler = ["vs2022"]
 
-[workspace.target.linux.build-variants]
-c_stdlib = ["sysroot"]
-c_stdlib_version = ["2.17"]
-
-[workspace.target.osx.build-variants]
-c_stdlib = ["macosx_deployment_target"]
-c_stdlib_version = ["11.0"]
-
 [workspace.dependencies]
 c-compiler = ">=2.0.0,<3"
 rust = "~=1.95.0"
@@ -48,14 +40,14 @@ cache-stat = { cmd = "sccache --show-stats", description = "Show sccache statist
 features = ["build", "cache"]
 
 [tasks]
-build = { cmd = "pixi build", description = "Build Volta" }
+build = { cmd = "pixi build", description = "Run Build" }
 
 # ----------------- #
 # Package definition #
 # ----------------- #
 [package]
-name = "volta"
-license = "BSD-2-Clause"
+name = "pixi-build-sccache-test"
+license = "MIT"
 
 [package.build-dependencies]
 sccache = { workspace = true }
@@ -77,14 +69,10 @@ backend = { name = "pixi-build-rust", workspace = true }
 secrets = [
   "ACTIONS_RESULTS_URL",
   "ACTIONS_RUNTIME_TOKEN",
-  "CARGO_HOME",
+  # "CARGO_HOME",
 ]
 
 [package.build.config]
-# The default profile is "release" and it doesn't need to be specified explicitly
-# but we explicitly set it here to provide a way to override it if needed, via
-# regex/sed replacement
-extra-args = ["--profile", "release"]
 # sccache must use the GitHub Actions cache service v2; the legacy v1
 # service is deprecated/blocked and rejects all cache writes.
 #
@@ -92,7 +80,3 @@ extra-args = ["--profile", "release"]
 # the pixi-build backend, as it has bug with detecting sccache correctly.
 env = { ACTIONS_CACHE_SERVICE_V2 = "on", SCCACHE_ENABLED = "true" }
 
-[package.build.target.win-arm64.config.env]
-# Use CMake to build aws-lc-sys, because conda's CFLAGS inject -O2 which
-# overrides the -O0 required by jitterentropy-base.c.
-AWS_LC_SYS_CMAKE_BUILDER = "1"
