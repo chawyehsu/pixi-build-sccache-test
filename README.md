@@ -26,7 +26,9 @@ The pre-step is defined as follows in the workflow file:
         run: pixi run -e build cargo run
 ```
 
-Without the pre-step, the build fails due to a weird sccache error of:
+The pixi build backend uses an isolated environment for building and should not
+requires the extra pre-step to work correctly. However, without the pre-step,
+the build fails due to a weird sccache error of:
 
 ```
 thread 'main' (2104) panicked at src\config.rs:1300:55:
