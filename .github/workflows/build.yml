@@ -83,4 +83,4 @@ jobs:
           mv *.conda out/windows-arm.conda
 
       - name: Check Sccache
-        run: pixi run -e test cache-stat
+        run: pixi run -e build cache-stat
