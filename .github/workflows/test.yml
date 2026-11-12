@@ -17,8 +17,28 @@ on:
 permissions: {}
 
 jobs:
+  build0:
+    name: Build
+    runs-on: windows-2022
+    env:
+      SCCACHE_GHA_ENABLED: true
+      RUSTC_WRAPPER: sccache
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Sccache
+        uses: mozilla-actions/sccache-action@fc920bf0ec8de6ee65d409111f7ec508035751ba # v0.0.11
+
+      - name: Build
+        run: cargo build
+
+      - name: Run
+        run: cargo run
+
   build:
-    name: Build Nightly
+    needs: build0
+    name: Build with Pixi
     uses: ./.github/workflows/build.yml
     with:
       build_type: nightly
