@@ -49,7 +49,7 @@ jobs:
           run-install: false
 
       - name: Test
-        run: pixi run cargo run
+        run: pixi run -e build cargo run
       
       # Windows: build
       - name: Build (Windows)
@@ -61,7 +61,7 @@ jobs:
           cd C:\w
 
           # Without the following line, a sccache error occurs when building
-          # pixi run cargo --version
+          # pixi run -e build cargo --version
 
           mkdir out | Out-Null
           pixi run build --target-platform win-64
