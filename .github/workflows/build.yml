@@ -7,7 +7,7 @@ on:
         description: Build release or nightly artifacts
         required: false
         type: string
-        default: release
+        default: nightly
   workflow_dispatch:
     inputs:
       build_type:
@@ -17,7 +17,15 @@ on:
         options:
           - release
           - nightly
-        default: release
+        default: nightly
+      prestep:
+        description: Pre-step to run before the build
+        required: false
+        type: choice
+        options:
+          - 'yes'
+          - 'no'
+        default: 'no'
 
 jobs:
   build:
@@ -50,6 +58,7 @@ jobs:
 
       # Without the following step, a sccache error occurs when building
       - name: Test
+        if: github.event.inputs.prestep == 'yes'
         run: pixi run -e build cargo run
       
       # Windows: build
