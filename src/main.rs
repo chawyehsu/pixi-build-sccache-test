@@ -35,46 +35,12 @@ pub fn known_folder(folder_id: windows::core::GUID) -> Option<PathBuf> {
     }
 }
 
-pub fn known_folder_profile() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Profile)
-}
-
 pub fn known_folder_roaming_app_data() -> Option<PathBuf> {
     known_folder(Shell::FOLDERID_RoamingAppData)
 }
 
 pub fn known_folder_local_app_data() -> Option<PathBuf> {
     known_folder(Shell::FOLDERID_LocalAppData)
-}
-
-pub fn known_folder_music() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Music)
-}
-
-pub fn known_folder_desktop() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Desktop)
-}
-
-pub fn known_folder_documents() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Documents)
-}
-
-pub fn known_folder_downloads() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Downloads)
-}
-
-pub fn known_folder_pictures() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Pictures)
-}
-
-pub fn known_folder_public() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Public)
-}
-pub fn known_folder_templates() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Templates)
-}
-pub fn known_folder_videos() -> Option<PathBuf> {
-    known_folder(Shell::FOLDERID_Videos)
 }
 
 }

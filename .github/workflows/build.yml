@@ -48,6 +48,7 @@ jobs:
         with:
           run-install: false
 
+      # Without the following step, a sccache error occurs when building
       - name: Test
         run: pixi run -e build cargo run
       
@@ -59,9 +60,6 @@ jobs:
           # Windows long-path issue workaround:
           New-Item -ItemType Junction -Path C:\w -Target "${{ github.workspace }}" | Out-Null
           cd C:\w
-
-          # Without the following line, a sccache error occurs when building
-          # pixi run -e build cargo --version
 
           mkdir out | Out-Null
           pixi run build --target-platform win-64
